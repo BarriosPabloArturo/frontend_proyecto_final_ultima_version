@@ -1,0 +1,39 @@
+.notas-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1rem;
+}
+
+.nota-card {
+  /* From https://css.glass */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 320px; /* O el alto que prefieras para todas las cards */
+  /* ...otros estilos... */
+  background: rgba(255, 255, 255, 0.23);
+  border-radius: 16px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(11.4px);
+  -webkit-backdrop-filter: blur(11.4px);
+  border: 1px solid rgba(255, 255, 255, 0.29);
+  padding: 1rem;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+
+  & audio {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  margin-top: 0.5rem;
+}
+
+}
+
+.nota-card h3 {
+  margin-top: 0;
+}
+
+.nota-card a {
+  text-decoration: none;
+  color: #2d87f0;
+}

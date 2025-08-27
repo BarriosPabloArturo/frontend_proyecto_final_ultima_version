@@ -1,0 +1,40 @@
+
+<div class="login-container">
+<h2>🔐 Iniciar Sesión</h2>
+<!--submit is an event tha calls the onLogin function-->
+<form (submit)="onLogin()" #form="ngForm">
+  <label>
+    Correo:
+    <input type="email" name="correo" [(ngModel)]="correo" required />
+    <!--ngModel is used to bind the input value to the component property-->
+    <!--required is used to validate the input-->
+  </label>
+  <br /><br />
+
+  <label>
+    Contraseña:
+    <input
+      type="password"
+      name="contrasena"
+      [(ngModel)]="contrasena"
+      required
+    />
+  </label>
+  <br /><br />
+
+  <button type="submit">Ingresar</button>
+</form>
+<!-- The button above is used to submit the form and call the onLogin function in the component -->
+ <!--the paragraph beneath is an error message-->
+ <!-- The error message is displayed if there is an error in the login process -->
+<!--ngIf is used to conditionally display the error message if the error property is truthy -->
+<!--*ngIf="error" is a structural directive that conditionally includes the element in the DOM -->
+<p *ngIf="error" style="color: red">{{ error }}</p>
+<p>
+  ¿No tienes cuenta?
+  <!--el routerLink es un parametro para enlazarse con rutas en el framework de angular. se necesita importar commonmodules en el archivo typescript del componente para usarlo-->
+  <a routerLink="/register">Regístrate aquí</a>
+</p>
+</div>
+
+

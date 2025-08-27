@@ -1,0 +1,60 @@
+<h2>🎤 {{ editando ? 'Escuchar Nota de Voz' : 'Nueva Nota de Voz' }}</h2>
+
+<!-- Modo edición/escuchar -->
+<div *ngIf="editando">
+  <label>
+    Título:
+    <input type="text" name="titulo" [(ngModel)]="titulo" readonly />
+  </label>
+  <br /><br />
+
+  <audio *ngIf="voz" [src]="voz" controls preload="auto" style="width: 100%;">
+    Tu navegador no soporta el elemento audio.
+  </audio>
+  <br />
+
+  <button type="button" (click)="eliminarNotaVoz()">🗑 Eliminar</button>
+  <p *ngIf="error" style="color: red">{{ error }}</p>
+</div>
+
+<!-- Formulario de creación -->
+<form *ngIf="!editando" (ngSubmit)="guardarNotaVoz()" #form="ngForm">
+  <label>
+    Título:
+    <input type="text" name="titulo" [(ngModel)]="titulo" required />
+  </label>
+  <br /><br />
+
+  <div>
+    <button type="button" class="grabar-btn" [class.grabando]="grabando" (click)="toggleGrabacion()">
+      {{ grabando ? '🟥 Detener grabación' : '🎙️ Iniciar grabación' }}
+    </button>
+    <p *ngIf="grabando">Grabando...</p>
+    <audio *ngIf="voz" [src]="voz" controls></audio>
+  </div>
+  <br />
+
+  <button type="submit" [disabled]="!voz">Guardar Nota de Voz</button>
+  <p *ngIf="error" style="color: red">{{ error }}</p>
+  <p *ngIf="exito" style="color: green">{{ exito }}</p>
+</form>
+
+<!-- Modal de confirmación para eliminar nota de voz -->
+<div *ngIf="mostrarModalEliminar" class="modal-overlay">
+    <div class="modal-content modal-confirmar">
+        <h3>🗑️ Eliminar Nota de Voz</h3>
+        
+        <p style="text-align: center; margin: 1.5rem 0; color: #290b3a; font-size: 1.1rem;">
+            ¿Estás seguro de que quieres eliminar esta nota de voz?
+        </p>
+        
+        <p style="text-align: center; margin-bottom: 2rem; color: #c0392b; font-size: 0.9rem;">
+            Esta acción no se puede deshacer.
+        </p>
+
+        <div class="modal-buttons">
+            <button type="button" class="modal-btn secondary" (click)="cancelarEliminar()">Cancelar</button>
+            <button type="button" class="modal-btn danger" (click)="confirmarEliminar()">🗑️ Eliminar</button>
+        </div>
+    </div>
+</div>

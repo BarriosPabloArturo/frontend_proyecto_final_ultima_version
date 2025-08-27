@@ -1,0 +1,40 @@
+<h2>🖊 Editar Nota</h2>
+
+<form (submit)="actualizar()" *ngIf="nota" #form="ngForm">
+  <label>
+    Título:
+    <input type="text" [(ngModel)]="nota.titulo" name="titulo" required />
+  </label>
+  <br /><br />
+
+  <label>
+    Nota:
+    <textarea [(ngModel)]="nota.nota" name="nota" required></textarea>
+  </label>
+  <br /><br />
+
+  <button type="submit">Actualizar</button>
+  <button type="button" (click)="eliminar()">🗑 Eliminar</button>
+
+  <p *ngIf="error" style="color: red">{{ error }}</p>
+</form>
+
+<!-- Modal de confirmación para eliminar nota -->
+<div *ngIf="mostrarModalEliminar" class="modal-overlay">
+    <div class="modal-content modal-confirmar">
+        <h3>🗑️ Eliminar Nota</h3>
+        
+        <p style="text-align: center; margin: 1.5rem 0; color: #290b3a; font-size: 1.1rem;">
+            ¿Estás seguro de que quieres eliminar esta nota?
+        </p>
+        
+        <p style="text-align: center; margin-bottom: 2rem; color: #c0392b; font-size: 0.9rem;">
+            Esta acción no se puede deshacer.
+        </p>
+
+        <div class="modal-buttons">
+            <button type="button" class="modal-btn secondary" (click)="cancelarEliminar()">Cancelar</button>
+            <button type="button" class="modal-btn danger" (click)="confirmarEliminar()">🗑️ Eliminar</button>
+        </div>
+    </div>
+</div>

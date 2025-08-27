@@ -1,0 +1,72 @@
+.register-container {
+  max-width: 400px;
+  margin: 3rem auto;
+  background: burlywood;
+  border-radius: 32px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  padding: 2.5rem 2rem;
+  color: #290b3a;
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 2rem;
+  color: #290b3a;
+}
+
+form label {
+  display: block;
+  margin-bottom: 1rem;
+  font-weight: bold;
+}
+
+input[type="email"],
+input[type="password"],
+input[type="text"] {
+  width: 100%;
+  padding: 0.6rem;
+  border-radius: 8px;
+  border: 1px solid #e0c097;
+  background: #fff8f0;
+  margin-top: 0.3rem;
+  font-size: 1rem;
+  color: #290b3a;
+}
+
+button[type="submit"] {
+  width: 100%;
+  background: #219150; // verde más oscuro/saturado 
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 0.7rem 0;
+  font-weight: bold;
+  font-size: 1.1rem;
+  margin-top: 1.5rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+button[type="submit"]:hover {
+  background: #27ae60; // verde medio
+}
+
+p {
+  text-align: center;
+  margin-top: 1.5rem;
+}
+
+a {
+  color: #290b3a;
+  text-decoration: underline;
+  font-weight: bold;
+}
+
+p[ng-reflect-ng-if="true"] {
+  color: red;
+  text-align: center;
+  margin-top: 1rem;
+}

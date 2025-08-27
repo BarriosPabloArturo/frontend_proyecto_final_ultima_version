@@ -1,0 +1,73 @@
+.layout {
+  display: flex;
+  min-height: 90vh;
+  background-color: burlywood;
+  padding: 20px;
+  border-radius: 40px;
+}
+
+h2 {
+  color: #290b3a; // O el color que prefieras
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+
+.sidebar {
+  position: fixed;
+  top: 40px; /* o el valor que prefieras para separarlo del top */
+  left: 40px; /* o el valor que prefieras para separarlo del borde izquierdo */
+  width: 200px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 16px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: white;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  align-items: center;
+  z-index: 100;
+  height: auto; /* Solo lo necesario para los botones */
+}
+
+.sidebar a {
+  color: white;
+  text-decoration: none;
+  display: block;
+  padding: 0.5rem 0;
+}
+
+.sidebar a.active {
+  font-weight: bold;
+  color: #290b3a;
+  background: rgba(59, 50, 50, 0.2);
+  border-radius: 8px;
+}
+
+
+
+
+.main-content {
+  flex: 1;
+  padding: 2rem;
+  margin-left: 240px; // Un poco más que el ancho del sidebar
+}
+
+.logout-btn {
+  background: #c0392b; // rojo más saturado
+  border: none;
+  color: white;
+  padding: 0.5rem 1.2rem;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.2s;
+
+  &:hover {
+    background: #e74c3c; // rojo medio 
+  }
+}

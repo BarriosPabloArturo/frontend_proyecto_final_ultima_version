@@ -1,0 +1,18 @@
+<div class="layout">
+  <aside class="sidebar">
+    <h2>📚 Notas</h2>
+    <nav>
+      <!-- ANTES -->
+       <!--el enlace a la página de notas que está en el componente de notas-->
+      <a routerLink="/notas" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">📋 Todas</a>
+      <!-- este enlace lleva a la página de nueva nota que está en el componente de notas, en el archivo nota-form-page.html, pero solo está en un formato de momento -->
+      <a routerLink="/notas/nueva" routerLinkActive="active">➕ Nueva</a>
+    </nav>
+    <!-- DESPUÉS -->
+    <button *ngIf="estaLogueado" class="logout-btn" (click)="logout()">🚪 Cerrar sesión</button>
+  </aside>
+
+  <main class="main-content">
+    <router-outlet />
+  </main>
+</div>

@@ -1,0 +1,385 @@
+:host {
+  display: block;
+  max-width: 900px; /* Más ancho para el calendario - cambio principal */
+  margin: 2rem auto;
+  background: rgba(255, 255, 255, 0.85);
+  border-radius: 20px;
+  box-shadow: 0 4px 30px rgba(0,0,0,0.08);
+  padding: 2rem 3rem; /* Más padding horizontal */
+}
+
+h2 {
+  color: #290b3a;
+  text-align: center;
+  margin-bottom: 2rem;
+  font-size: 2rem;
+  letter-spacing: 1px;
+}
+
+h3 {
+  color: #290b3a;
+  text-align: center;
+  margin-bottom: 0.5rem; /* Reducido de 1rem a 0.5rem */
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem; /* Reducido de 1.5rem a 1rem */
+}
+
+label {
+  font-weight: 600;
+  color: #290b3a;
+  margin-bottom: 0.5rem;
+  display: block;
+}
+
+input[type="text"] {
+  width: 100%;
+  padding: 0.7rem 1rem;
+  border: 1px solid #d1c4e9;
+  border-radius: 8px;
+  font-size: 1rem;
+  background: #f8f6ff;
+  color: #290b3a;
+  transition: border 0.2s;
+  margin-top: 0.3rem;
+}
+
+input[type="text"]:focus {
+  border: 1.5px solid #290b3a;
+  outline: none;
+}
+
+input[readonly] {
+  background: #f0f0f0;
+  color: #666;
+}
+
+/* Encabezados de días de la semana */
+.dias-semana {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 1px;
+  margin-bottom: 1px;
+}
+
+.dia-semana {
+  background: #290b3a;
+  color: white;
+  padding: 0.7rem;
+  text-align: center;
+  font-weight: bold;
+  font-size: 0.9rem;
+  letter-spacing: 0.5px;
+}
+
+/* Grid del calendario */
+.calendario-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 1px;
+  background: #d1c4e9;
+  margin-bottom: 1.5rem;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.dia-celda {
+  background: white;
+  padding: 0.8rem; /* Más padding para más espacio */
+  min-height: 90px; /* Más altura para los días */
+  cursor: pointer;
+  transition: background 0.2s, border 0.2s;
+  border: 1px solid transparent;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.dia-celda:hover {
+  background: #f8f6ff;
+  border: 1px solid #d1c4e9;
+}
+
+.dia-numero {
+  font-weight: bold;
+  margin-bottom: 0.25rem;
+  color: #290b3a;
+}
+
+/* Día actual con círculo azul */
+.dia-hoy .dia-numero {
+  width: 24px;
+  height: 24px;
+  background: #2196f3;
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.9rem;
+}
+
+/* Días con eventos */
+.dia-con-evento {
+  background: #e3f2fd !important;
+  border: 1px solid #2196f3 !important;
+}
+
+.evento-preview {
+  font-size: 0.75rem;
+  color: #1976d2;
+  background: rgba(33, 150, 243, 0.1);
+  padding: 0.2rem 0.3rem;
+  border-radius: 4px;
+  margin-top: 0.2rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Modal */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(41, 11, 58, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  backdrop-filter: blur(2px);
+}
+
+.modal-content {
+  background: white;
+  padding: 2rem;
+  border-radius: 15px;
+  width: 90%;
+  max-width: 400px;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+}
+
+.modal-content h3 {
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+  color: #290b3a;
+  text-align: center;
+}
+
+.modal-content label {
+  display: block;
+  margin-bottom: 1rem;
+}
+
+.modal-content input,
+.modal-content textarea {
+  width: 100%;
+  padding: 0.7rem;
+  border: 1px solid #d1c4e9;
+  border-radius: 8px;
+  font-size: 1rem;
+  background: #f8f6ff;
+  color: #290b3a;
+  margin-top: 0.3rem;
+}
+
+.modal-content input:focus,
+.modal-content textarea:focus {
+  border: 1.5px solid #290b3a;
+  outline: none;
+}
+
+.modal-content textarea {
+  min-height: 80px;
+  resize: vertical;
+}
+
+/* Botones principales */
+button[type="submit"],
+button[type="button"]:not(.modal-btn) {
+  background: #290b3a;
+  color: #fff;
+  padding: 0.7rem 1.5rem;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: bold;
+  margin-right: 0.5rem;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+
+button[type="submit"]:hover,
+button[type="button"]:not(.modal-btn):hover {
+  background: #432c5c;
+}
+
+button[type="submit"]:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}
+
+/* Botón de eliminar calendario */
+.eliminar-btn {
+  background: #c0392b !important;
+  color: #fff !important;
+}
+
+.eliminar-btn:hover {
+  background: #e74c3c !important;
+}
+
+/* Botones del modal */
+.modal-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+  margin-top: 1.5rem;
+}
+
+.modal-btn {
+  padding: 0.6rem 1.2rem;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.modal-btn.primary {
+  background: #290b3a;
+  color: white;
+}
+
+.modal-btn.primary:hover {
+  background: #432c5c;
+}
+
+.modal-btn.secondary {
+  background: #f0f0f0;
+  color: #333;
+}
+
+.modal-btn.secondary:hover {
+  background: #e0e0e0;
+}
+
+/* Mensajes de error y éxito */
+p[style*="color: red"] {
+  margin-top: 1rem;
+  color: #c0392b !important;
+  font-weight: bold;
+  text-align: center;
+  background: rgba(255, 0, 0, 0.07);
+  border-radius: 8px;
+  padding: 0.5rem;
+}
+
+p[style*="color: green"] {
+  margin-top: 1rem;
+  color: #27ae60 !important;
+  font-weight: bold;
+  text-align: center;
+  background: rgba(39, 174, 96, 0.07);
+  border-radius: 8px;
+  padding: 0.5rem;
+}
+
+/* Responsive - Ajustado para pantallas más grandes */
+@media (max-width: 1024px) {
+  :host {
+    max-width: 95%;
+    padding: 2rem;
+  }
+  
+  .dia-celda {
+    min-height: 70px;
+    padding: 0.6rem;
+  }
+}
+
+@media (max-width: 768px) {
+  :host {
+    max-width: 95%;
+    padding: 1.5rem;
+  }
+  
+  .dia-celda {
+    min-height: 60px; /* Reducido para móviles */
+    padding: 0.4rem;
+  }
+  
+  .dia-numero {
+    font-size: 0.8rem;
+  }
+  
+  .evento-preview {
+    font-size: 0.7rem;
+  }
+  
+  .modal-content {
+    width: 95%;
+    padding: 1.5rem;
+  }
+}
+
+/* Modal de confirmación */
+.modal-confirmar {
+  max-width: 450px;
+  text-align: center;
+}
+
+.modal-confirmar h3 {
+  color: #c0392b;
+  margin-bottom: 1rem;
+}
+
+.modal-confirmar p {
+  line-height: 1.5;
+}
+
+/* Botón de peligro para eliminar */
+.modal-btn.danger {
+  background: #c0392b;
+  color: white;
+}
+
+.modal-btn.danger:hover {
+  background: #e74c3c;
+}
+
+@media (max-width: 480px) {
+  :host {
+    padding: 1rem;
+  }
+  
+  .dia-celda {
+    min-height: 50px;
+    padding: 0.3rem;
+  }
+  
+  .dia-numero {
+    font-size: 0.75rem;
+  }
+  
+  .evento-preview {
+    font-size: 0.65rem;
+  }
+  
+  h2 {
+    font-size: 1.5rem;
+  }
+  
+  .dia-semana {
+    padding: 0.5rem;
+    font-size: 0.8rem;
+  }
+}

@@ -1,0 +1,21 @@
+<!-- nota-tipo-page.component.html -->
+ <!--version 1-->
+<h2>¿Qué tipo de nota quieres crear?</h2>
+<div class="tipo-nota-selector">
+  <a routerLink="/notas/nueva/texto" class="tipo-btn">📝 Nota de texto</a>
+  <a routerLink="/notas/nueva/checklist" class="tipo-btn">✅ Check list</a>
+  <a routerLink="/notas/nueva/sketchpad" class="tipo-btn">🎨 Sketchpad</a>
+  <a routerLink="/notas/nueva/voz" class="tipo-btn">🎤 Nota de voz</a>
+  <a (click)="irACalendario()" class="tipo-btn" style="cursor: pointer;">📅 Calendario</a>
+</div>
+
+<!-- nota-tipo-page.component.html -->
+<!-- version 2 -->
+<!-- This version uses relative routing -->
+<!-- <h2>¿Qué tipo de nota quieres crear?</h2>
+<div class="tipo-nota-selector">
+  <a routerLink="texto" class="tipo-btn">📝 Nota de texto</a>
+  <a routerLink="checklist" class="tipo-btn">✅ Check list</a>
+  <a routerLink="sketchpad" class="tipo-btn">🎨 Sketchpad</a>
+  <a routerLink="voz" class="tipo-btn">🎤 Nota de voz</a>
+</div> -->

@@ -1,0 +1,61 @@
+<h2>{{ editando ? '✏️ Editar Check List' : '➕ Nueva Check List' }}</h2>
+
+<form (ngSubmit)="guardarChecklist()" #form="ngForm">
+  <label>
+    Título:
+    <input type="text" name="titulo" [(ngModel)]="titulo" required />
+  </label>
+  <br /><br />
+
+  <div>
+    <label>Ítems:</label>
+    <div *ngFor="let item of items; let i = index; trackBy: trackByIndex" style="display: flex; align-items: center; gap: 0.5rem;">
+      <!-- Botón de checado -->
+      <button type="button" class="check-btn item-btn" [class.checked]="item.completado" (click)="checarItem(i)"
+        [disabled]="!item.texto.trim()">
+        {{ item.completado ? '✔' : 'O' }}
+      </button>
+
+      <!-- Input editable solo si no está completado -->
+      <input type="text" [(ngModel)]="items[i].texto" name="item-{{i}}" [readonly]="item.completado"
+        [style.textDecoration]="item.completado ? 'line-through' : 'none'" required placeholder="Escribe una tarea"
+        style="flex: 1;" />
+
+      <!-- Botones de mover -->
+      <button type="button" class="move-up-btn item-btn" (click)="moverArriba(i)" [disabled]="i === 0">⭡</button>
+      <button type="button" class="move-down-btn item-btn" (click)="moverAbajo(i)"
+        [disabled]="i === items.length - 1">⭣</button>
+
+      <!-- Botón de eliminar ítem -->
+      <button type="button" class="item-btn" (click)="eliminarItem(i)">🗑</button>
+    </div>
+    <br>
+    <button type="button" (click)="agregarItem()">➕ Agregar ítem</button>
+  </div>
+  <br />
+
+  <button type="submit">Guardar Check List</button>
+  <button *ngIf="editando" type="button" class="eliminar-btn" (click)="eliminarChecklist()">🗑 Eliminar</button>
+
+  <p *ngIf="error" style="color: red">{{ error }}</p>
+</form>
+
+<!-- Modal de confirmación para eliminar checklist -->
+<div *ngIf="mostrarModalEliminar" class="modal-overlay">
+    <div class="modal-content modal-confirmar">
+        <h3>🗑️ Eliminar Checklist</h3>
+        
+        <p style="text-align: center; margin: 1.5rem 0; color: #290b3a; font-size: 1.1rem;">
+            ¿Estás seguro de que quieres eliminar este checklist?
+        </p>
+        
+        <p style="text-align: center; margin-bottom: 2rem; color: #c0392b; font-size: 0.9rem;">
+            Esta acción no se puede deshacer.
+        </p>
+
+        <div class="modal-buttons">
+            <button type="button" class="modal-btn secondary" (click)="cancelarEliminar()">Cancelar</button>
+            <button type="button" class="modal-btn danger" (click)="confirmarEliminar()">🗑️ Eliminar</button>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,40 @@
+<div class="register-container">
+<h2>📝 Registrarse</h2>
+<!-- This is the registration page for new users -->
+<!-- It allows users to create an account by providing their name, email, and password -->
+ <!-- event binding is used to call the onRegister method when the form is submitted -->
+<!-- ngModel is used for two-way data binding with the form inputs -->
+<form (submit)="onRegister()" #form="ngForm">
+  <label>
+    Nombre:
+    <input type="text" name="nombre" [(ngModel)]="nombre" required />
+  </label>
+  <br /><br />
+
+  <label>
+    Correo:
+    <input type="email" name="correo" [(ngModel)]="correo" required />
+  </label>
+  <br /><br />
+  <!-- [(ngModel)] binds the contrasena property to the input field -->
+  <!-- required ensures that the field is not empty -->
+  <label>
+    Contraseña:
+    <input
+      type="password"
+      name="contrasena"
+      [(ngModel)]="contrasena"
+      required
+    />
+  </label>
+  <br /><br />
+
+  <button type="submit">Registrarse</button>
+</form>
+
+<p *ngIf="error" style="color: red">{{ error }}</p>
+<p>
+  ¿Ya tienes cuenta?
+  <a routerLink="/login">Inicia sesión</a>
+</p>
+</div>

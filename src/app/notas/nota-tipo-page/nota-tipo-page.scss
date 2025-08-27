@@ -1,0 +1,24 @@
+// nota-tipo-page.component.scss
+.tipo-nota-selector {
+  display: flex;
+  gap: 2rem;
+  margin-top: 2rem;
+  justify-content: center;
+}
+
+.tipo-btn {
+  padding: 1rem 2rem;
+  border-radius: 12px;
+  background: #f5d76e;
+  color: #333;
+  text-decoration: none;
+  font-size: 1.2rem;
+  font-weight: bold;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  transition: background 0.2s;
+}
+
+.tipo-btn:hover {
+  background: #ffe28a;
+  cursor: pointer;
+}

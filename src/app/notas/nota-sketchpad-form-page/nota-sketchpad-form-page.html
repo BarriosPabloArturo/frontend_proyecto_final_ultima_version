@@ -1,0 +1,49 @@
+<h2>🎨 Nueva Nota Sketchpad</h2>
+
+<form (ngSubmit)="guardarSketchpad()" #form="ngForm">
+  <label>
+    Título:
+    <input type="text" name="titulo" [(ngModel)]="titulo" required />
+  </label>
+  <br /><br />
+
+  <!-- <label>
+    Nota:
+    <textarea name="nota" [(ngModel)]="nota"></textarea>
+  </label>
+  <br /><br /> -->
+
+  <div>
+    <canvas #canvas width="400" height="300" style="border:1px solid #ccc; background: #fff;"></canvas>
+    <br />
+    <button type="button" (click)="limpiarCanvas()">Limpiar</button>
+  </div>
+  <br />
+
+  
+  <!-- ... -->
+  <button type="submit">{{ editando ? 'Actualizar' : 'Guardar' }} Sketchpad</button>
+  <button *ngIf="editando" type="button" (click)="eliminarSketchpad()">🗑 Eliminar</button>
+  <!-- ... -->
+  <p *ngIf="error" style="color: red">{{ error }}</p>
+</form>
+
+<!-- Modal de confirmación para eliminar sketchpad -->
+<div *ngIf="mostrarModalEliminar" class="modal-overlay">
+    <div class="modal-content modal-confirmar">
+        <h3>🗑️ Eliminar Sketchpad</h3>
+        
+        <p style="text-align: center; margin: 1.5rem 0; color: #290b3a; font-size: 1.1rem;">
+            ¿Estás seguro de que quieres eliminar este dibujo?
+        </p>
+        
+        <p style="text-align: center; margin-bottom: 2rem; color: #c0392b; font-size: 0.9rem;">
+            Esta acción no se puede deshacer.
+        </p>
+
+        <div class="modal-buttons">
+            <button type="button" class="modal-btn secondary" (click)="cancelarEliminar()">Cancelar</button>
+            <button type="button" class="modal-btn danger" (click)="confirmarEliminar()">🗑️ Eliminar</button>
+        </div>
+    </div>
+</div>

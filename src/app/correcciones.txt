@@ -1,0 +1,84 @@
+Resumen de correcciones y buenas prácticas para tests en Angular
+============================================================
+
+1. Corrección de imports y nombres de clases
+--------------------------------------------
+- Se corrigieron los imports en los archivos de test para que coincidan exactamente con los nombres exportados en los archivos fuente.
+  Ejemplo:
+    Cambié `import { authGuard } from './auth-guard';`
+    por `import { AuthGuard } from './auth-guard';`
+- Se ajustaron los tests para que usen la clase correcta (`AuthGuard` en vez de `authGuard`).
+
+2. Corrección de importaciones de servicios
+-------------------------------------------
+- Se revisó que los servicios estuvieran correctamente importados y que el nombre de la clase coincidiera con la exportación real.
+  Ejemplo:
+    Cambié `import { Api } from './api';`
+    por `import { ApiService } from './api';` si la clase exportada era `ApiService`.
+
+3. Mock de dependencias de Angular Router
+-----------------------------------------
+- Muchos componentes dependen de `ActivatedRoute` para acceder a parámetros de la ruta.
+- En los tests, se debe mockear este provider para evitar errores de "No provider for ActivatedRoute".
+
+  Ejemplo de mock básico:
+  ```typescript
+  import { ActivatedRoute } from '@angular/router';
+  providers: [
+    { provide: ActivatedRoute, useValue: {} }
+  ]
+  ```
+
+  Ejemplo de mock avanzado para parámetros:
+  ```typescript
+  import { ActivatedRoute, convertToParamMap } from '@angular/router';
+  providers: [
+    {
+      provide: ActivatedRoute,
+      useValue: {
+        snapshot: {
+          paramMap: convertToParamMap({ id: 'mock-id' })
+        }
+      }
+    }
+  ]
+  ```
+  Esto permite que el componente acceda a `this.route.snapshot.paramMap.get('id')` sin error.
+
+4. Mock de servicios HTTP
+-------------------------
+- Para evitar que los tests hagan peticiones reales, se debe importar `HttpClientTestingModule` en los tests de servicios que usan HTTP.
+
+  ```typescript
+  import { HttpClientTestingModule } from '@angular/common/http/testing';
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      imports: [HttpClientTestingModule],
+      // otros providers...
+    });
+  });
+  ```
+
+5. Corrección de tests de componentes
+-------------------------------------
+- Se eliminaron o ajustaron tests que esperaban elementos en el template que no existen (por ejemplo, un `<h1>` con el título si el template solo tiene `<router-outlet>`).
+
+6. Instalación de dependencias necesarias
+-----------------------------------------
+- Se instaló `@angular/router` para asegurar que los imports y mocks funcionen correctamente.
+
+7. Validación final
+-------------------
+- Se ejecutó `ng test` varias veces hasta que todos los tests pasaron exitosamente.
+- El mensaje esperado para éxito es:
+  Chrome ...: Executed X of X SUCCESS (...)
+
+Buenas prácticas aprendidas
+--------------------------
+- Siempre asegúrate de que los nombres de imports coincidan exactamente con los exports.
+- Mockea todas las dependencias externas (rutas, servicios HTTP, etc.) en los tests.
+- Usa utilidades de Angular como `convertToParamMap` para simular correctamente el entorno de ejecución.
+- Ajusta o elimina tests que no reflejan el template real del componente.
+- Instala todas las dependencias necesarias para que los tests puedan correr en un entorno aislado.
+
+Este proceso te servirá como guía para depurar y testear cualquier proyecto Angular, y es útil para compartir con otros desarrolladores que enfrenten problemas similares.

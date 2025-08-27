@@ -1,0 +1,102 @@
+<h2>📅 {{ editando ? 'Calendario' : 'Nuevo Calendario' }}</h2>
+
+<form (ngSubmit)="guardarCalendario()" #form="ngForm">
+    <label>
+        Título:
+        <input type="text" [(ngModel)]="titulo" name="titulo" required />
+    </label>
+
+
+    <!-- Encabezado del calendario -->
+    <div style="text-align: center; margin-bottom: 1rem;">
+        <h3>{{ mesActual.toLocaleDateString('es-ES', { month: 'long', year: 'numeric' }) }}</h3>
+    </div>
+
+    <!-- Días de la semana -->
+    <div style="display: grid; grid-template-columns: repeat(7, 1fr); gap: 1px; margin-bottom: 1px;">
+        <div style="background: #f0f0f0; padding: 0.5rem; text-align: center; font-weight: bold;">Dom</div>
+        <div style="background: #f0f0f0; padding: 0.5rem; text-align: center; font-weight: bold;">Lun</div>
+        <div style="background: #f0f0f0; padding: 0.5rem; text-align: center; font-weight: bold;">Mar</div>
+        <div style="background: #f0f0f0; padding: 0.5rem; text-align: center; font-weight: bold;">Mié</div>
+        <div style="background: #f0f0f0; padding: 0.5rem; text-align: center; font-weight: bold;">Jue</div>
+        <div style="background: #f0f0f0; padding: 0.5rem; text-align: center; font-weight: bold;">Vie</div>
+        <div style="background: #f0f0f0; padding: 0.5rem; text-align: center; font-weight: bold;">Sáb</div>
+    </div>
+
+    <!-- Grid del calendario -->
+    <div style="display: grid; grid-template-columns: repeat(7, 1fr); gap: 1px; background: #ddd; margin-bottom: 1rem;">
+        <div *ngFor="let dia of diasDelMes"
+            style="background: white; padding: 0.5rem; min-height: 60px; border: 1px solid #eee;"
+            [style.background]="tieneEvento(dia) ? '#e3f2fd' : 'white'"
+            [style.cursor]="dia === 0 ? 'default' : 'pointer'" [style.opacity]="dia === 0 ? '0.3' : '1'"
+            (click)="dia !== 0 && abrirModal(dia)">
+
+            <!-- Solo mostrar contenido si no es celda vacía -->
+            <ng-container *ngIf="dia !== 0">
+                <!-- Número del día con círculo si es hoy -->
+                <div [style.width]="esHoy(dia) ? '24px' : 'auto'" [style.height]="esHoy(dia) ? '24px' : 'auto'"
+                    [style.background]="esHoy(dia) ? '#2196f3' : 'transparent'"
+                    [style.color]="esHoy(dia) ? 'white' : 'black'" [style.border-radius]="esHoy(dia) ? '50%' : '0'"
+                    [style.display]="esHoy(dia) ? 'flex' : 'block'"
+                    [style.align-items]="esHoy(dia) ? 'center' : 'initial'"
+                    [style.justify-content]="esHoy(dia) ? 'center' : 'initial'"
+                    style="font-weight: bold; margin-bottom: 0.25rem;">
+                    {{ dia }}
+                </div>
+
+                <!-- Evento si existe -->
+                <div *ngIf="tieneEvento(dia)" style="font-size: 0.8rem; color: #1976d2;">
+                    {{ obtenerEvento(dia)?.titulo }}
+                </div>
+            </ng-container>
+        </div>
+    </div>
+
+    <button type="submit">Guardar Calendario</button>
+    <button *ngIf="editando" type="button" class="eliminar-btn" (click)="eliminarCalendario()">🗑 Eliminar</button>
+
+    <p *ngIf="error" style="color: red;">{{ error }}</p>
+    <p *ngIf="exito" style="color: green;">{{ exito }}</p>
+</form>
+
+<!-- Modal para agregar evento -->
+<div *ngIf="mostrarModal" class="modal-overlay">
+    <div class="modal-content">
+        <h3>Evento para el día {{ diaSeleccionado }}</h3>
+
+        <label>
+            Título:
+            <input type="text" [(ngModel)]="nuevoEvento.titulo" />
+        </label>
+
+        <label>
+            Descripción:
+            <textarea [(ngModel)]="nuevoEvento.descripcion" placeholder="Descripción opcional"></textarea>
+        </label>
+
+        <div class="modal-buttons">
+            <button type="button" class="modal-btn secondary" (click)="cerrarModal()">Cancelar</button>
+            <button type="button" class="modal-btn primary" (click)="agregarEvento()">Guardar</button>
+        </div>
+    </div>
+</div>
+
+<!-- Modal de confirmación para eliminar calendario -->
+<div *ngIf="mostrarModalEliminar" class="modal-overlay">
+    <div class="modal-content modal-confirmar">
+        <h3>🗑️ Eliminar Calendario</h3>
+        
+        <p style="text-align: center; margin: 1.5rem 0; color: #290b3a; font-size: 1.1rem;">
+            ¿Estás seguro de que quieres eliminar este calendario?
+        </p>
+        
+        <p style="text-align: center; margin-bottom: 2rem; color: #c0392b; font-size: 0.9rem;">
+            Esta acción no se puede deshacer.
+        </p>
+
+        <div class="modal-buttons">
+            <button type="button" class="modal-btn secondary" (click)="cancelarEliminar()">Cancelar</button>
+            <button type="button" class="modal-btn danger" (click)="confirmarEliminar()">🗑️ Eliminar</button>
+        </div>
+    </div>
+</div>
